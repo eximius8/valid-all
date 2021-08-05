@@ -1,7 +1,8 @@
 from valid_all import valid_all
+from auxiliary_funcs import clear_data, is_json_valid, regex_validation
 
 
-def main():
+def main() -> None:
     pass
 
 

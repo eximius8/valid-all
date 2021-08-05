@@ -1,6 +1,6 @@
 """Вспомогательные функци для тестирования валидатора валидола(:."""
 from jsonschema import validate, exceptions
-import json
+import json, re
 
 
 def is_json_valid(data: dict, json_schema = 'schema.json') -> bool:
@@ -15,4 +15,14 @@ def is_json_valid(data: dict, json_schema = 'schema.json') -> bool:
         return True
     except exceptions.ValidationError:
         return False    
-    
+
+
+def clear_data() -> None:
+    """Функция вызывается по умолчанию."""
+    print("default_behavior чистит что натворила основная функция.")
+
+
+def regex_validation(validated_str: str, patter: str) -> bool:
+    """Функция для валидации выходных параметров."""    
+    matched = re.match(patter, validated_str)
+    return bool(matched)
