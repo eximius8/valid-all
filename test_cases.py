@@ -12,9 +12,14 @@ invalid_json_output = '{"name": "Мишка", "email": "erterwtre", "age": 32}'
 
 class CheckDecoratorTest(unittest.TestCase):
 
-    def test_error(self):
+    def test_input_error(self):
         with self.assertRaises(InputParameterVerificationError):
             main(data=invalid_json_string_to_parse, schema="schema.json")
+        
+    def test_output_error(self):
+        with self.assertRaises(ResultVerificationError):
+            main(data=invalid_json_output, schema="schema.json")
+
 
 if __name__ == '__main__':
     unittest.main()

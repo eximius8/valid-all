@@ -5,6 +5,7 @@ from cust_exceptions import (
     ResultVerificationError)
 from typing import Callable, Any
 
+
 def valid_all(
     input_validation: Callable,
     output_validation: Callable,
