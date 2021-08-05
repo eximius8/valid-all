@@ -3,15 +3,18 @@ from jsonschema import validate, exceptions
 import json, re
 
 
-def is_json_valid(data: dict, json_schema = 'schema.json') -> bool:
+def is_json_valid(*args, **kwargs) -> bool:
     """Валидация входных данных.
     
     data - входные данные
     json_schema - путь к файлу с json схемой"""
+    json_schema = kwargs['schema']
+    data = kwargs['data']
     with open(json_schema, 'r') as fschema:
         schema = json.loads(fschema.read())
     try:
-        validate(instance=data, schema=schema)
+        dict_data = json.loads(data)
+        validate(instance=dict_data, schema=schema)
         return True
     except exceptions.ValidationError:
         return False    

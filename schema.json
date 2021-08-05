@@ -2,6 +2,6 @@
     "type": "object",
     "properties": {"name": {"type": "string"}, 
                    "surname": {"type": "string"}, 
-                   "age": {"type": "int"}},
+                   "age": {"type": "integer"}},
     "required": ["name", "surname", "age"]
 }
