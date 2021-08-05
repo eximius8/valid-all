@@ -13,12 +13,11 @@ def valid_all(
     default_behavior: Callable = None,
 ) -> Callable:
     """Основной декоратор."""
-    if on_fail_repeat_times == 0:
-        # Неверно указан параметр
-        raise FailRepeatTimesError
-
     def decorator(func: Callable) -> Callable:
         def wrapper(*args: Any, **kwargs: Any) -> Any:
+            if on_fail_repeat_times == 0:
+                # Неверно указан параметр
+                raise FailRepeatTimesError
             if not input_validation(*args, **kwargs):
                 # Проверка входных парметров
                 raise InputParameterVerificationError
