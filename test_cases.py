@@ -19,7 +19,7 @@ def with_defaul(data: str, schema: str) -> str:
 
 
 @valid_all(input_validation=is_json_valid, output_validation=regex_validation)
-def without_defaul(data: str, schema: str) -> str:
+def without_default(data: str, schema: str) -> str:
     """Функция для тестирования с незаданным default_behavior."""
     dict_data = json.loads(data)
     return dict_data['name']
@@ -34,7 +34,11 @@ class CheckDecoratorTest(unittest.TestCase):
 
     def test_output_error(self):
         with self.assertRaises(ResultVerificationError):
-            without_defaul(data=invalid_json_output, schema="schema.json")
+            without_default(data=invalid_json_output, schema="schema.json")
+    
+    def test_invalid_json(self):
+        with self.assertRaises(InputParameterVerificationError):
+            with_defaul(data=invalid_json_string_to_parse, schema="schema.json")
 
 
 if __name__ == '__main__':
