@@ -28,7 +28,7 @@ def valid_all(
                 return func(*args, **kwargs)
             else:
                 # Запомнить ошибку, если функция не прошла проверку
-                error = ResultVerificationError()
+                error = ResultVerificationError
             if on_fail_repeat_times < 0:
                 # Функцию можно повторить бесконечно
                 while not output_validation(result):
