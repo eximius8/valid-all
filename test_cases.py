@@ -1,11 +1,10 @@
 """Для юниттестов"""
 
-import unittest, json
+import unittest
+import json
 from valid_all import valid_all
 from auxiliary_funcs import is_json_valid, clear_data, regex_validation
-from cust_exceptions import (FailRepeatTimesError,
-    InputParameterVerificationError, 
-    ResultVerificationError)
+from cust_exceptions import InputParameterVerificationError, ResultVerificationError  # FailRepeatTimesError
 
 valid_json_string_to_parse = '{"name": "Мишка", "email": "dsads@dsfsdf.ru", "age": 32}'
 invalid_json_string_to_parse = '{"name": "Мишка", "email": "fsdafdasfdsa@fdsafsda.ru"}'
@@ -26,13 +25,13 @@ def without_defaul(data: str, schema: str) -> str:
     return dict_data['name']
 
 
-
 class CheckDecoratorTest(unittest.TestCase):
+    """Тестирование декоратора."""
 
     def test_input_error(self):
         with self.assertRaises(InputParameterVerificationError):
             with_defaul(data=invalid_json_string_to_parse, schema="schema.json")
-        
+
     def test_output_error(self):
         with self.assertRaises(ResultVerificationError):
             without_defaul(data=invalid_json_output, schema="schema.json")
