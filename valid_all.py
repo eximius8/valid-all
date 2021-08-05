@@ -23,26 +23,24 @@ def valid_all(
                 raise InputParameterVerificationError
             result = func(*args, **kwargs)
             if output_validation(result):
-                # Функция прошла проверку выходных параметров
+                # Функция прошла проверку выходных параметров с первого раза
                 return func(*args, **kwargs)
             else:
+                # Запомнить ошибку, если функция не прошла проверку
                 error = ResultVerificationError()
             if on_fail_repeat_times < 0:
-                    while not output_validation(result):
-                        result = func(*args, **kwargs)
-                    else:
-                        for i in range(on_fail_repeat_times):
-                            result = func(*args, **kwargs)
-                            if output_validation(result):
-                                return result
-                            else:
-                                print(error)
-                        if not default_behavior:
-                            pass
-                        else:
-                            default_behavior()
-                
-
+                # Функцию можно повторить бесконечно
+                while not output_validation(result):
+                    result = func(*args, **kwargs)
+            else:
+                for _ in range(on_fail_repeat_times - 1):
+                    # Повторяем функцию необходимое количество раз
+                    result = func(*args, **kwargs)
+                    if output_validation(result):
+                        return result
+                if default_behavior:
+                    # Если задана default_behavior выполнить её
+                    default_behavior()
+                raise error
         return wrapper
-
     return decorator
