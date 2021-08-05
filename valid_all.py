@@ -11,7 +11,7 @@ def valid_all(
     on_fail_repeat_times: int = 1,
     default_behavior: Callable = None,
 ) -> Callable:
-    """Декоратор для валидации функции."""
+    """Основной декоратор."""
     if on_fail_repeat_times == 0:
         # Неверно указан параметр
         raise FailRepeatTimesError
@@ -33,14 +33,18 @@ def valid_all(
                 while not output_validation(result):
                     result = func(*args, **kwargs)
             else:
+                # Функцию можно повторить указанное число раз
                 for _ in range(on_fail_repeat_times - 1):
                     # Повторяем функцию необходимое количество раз
                     result = func(*args, **kwargs)
                     if output_validation(result):
                         return result
+                    else:
+                        error = ResultVerificationError()
                 if default_behavior:
                     # Если задана default_behavior выполнить её
                     default_behavior()
-                raise error
+                else:
+                    raise error
         return wrapper
     return decorator
