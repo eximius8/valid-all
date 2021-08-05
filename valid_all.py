@@ -39,8 +39,6 @@ def valid_all(
                     result = func(*args, **kwargs)
                     if output_validation(result):
                         return result
-                    else:
-                        error = ResultVerificationError()
                 if default_behavior:
                     # Если задана default_behavior выполнить её
                     default_behavior()
