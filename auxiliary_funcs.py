@@ -25,7 +25,7 @@ def clear_data() -> None:
     print("default_behavior чистит что натворила основная функция.")
 
 
-def regex_validation(validated_str: str, patter = "[^\s]+") -> bool:
+def regex_validation(validated_str: str, patter = r"[^@]+@[^@]+\.[^@]+") -> bool:
     """Функция для валидации выходных параметров."""    
     matched = re.match(patter, validated_str)
     return bool(matched)
