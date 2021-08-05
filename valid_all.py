@@ -13,20 +13,23 @@ def valid_all(
 ) -> Callable:
     """Декоратор для валидации функции."""
     if on_fail_repeat_times == 0:
+        # Неверно указан параметр
         raise FailRepeatTimesError
 
-    def decoration(func: Callable) -> Callable:
+    def decorator(func: Callable) -> Callable:
         def wrapper(*args: Any, **kwargs: Any) -> Any:
-            if input_validation(*args, **kwargs):
-                result = func(*args, **kwargs)
-                if output_validation(result):
-                    return func(*args, **kwargs)
-                else:
-                    error = ResultVerificationError()
-                    
-                    if on_fail_repeat_times < 0:
-                        while not output_validation(result):
-                            result = func(*args, **kwargs)
+            if not input_validation(*args, **kwargs):
+                # Проверка входных парметров
+                raise InputParameterVerificationError
+            result = func(*args, **kwargs)
+            if output_validation(result):
+                # Функция прошла проверку выходных параметров
+                return func(*args, **kwargs)
+            else:
+                error = ResultVerificationError()
+            if on_fail_repeat_times < 0:
+                    while not output_validation(result):
+                        result = func(*args, **kwargs)
                     else:
                         for i in range(on_fail_repeat_times):
                             result = func(*args, **kwargs)
@@ -38,9 +41,8 @@ def valid_all(
                             pass
                         else:
                             default_behavior()
-            else:
-                raise InputDataError("Входные данные не прошли валидацию")
+                
 
         return wrapper
 
-    return decoration
+    return decorator
