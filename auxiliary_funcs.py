@@ -26,6 +26,6 @@ def clear_data() -> None:
 
 
 def regex_validation(validated_str: str, patter = r"[^@]+@[^@]+\.[^@]+") -> bool:
-    """Функция для валидации выходных параметров."""    
+    """Функция для валидации выходных параметров."""
     matched = re.match(patter, validated_str)
     return bool(matched)

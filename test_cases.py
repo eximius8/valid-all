@@ -15,21 +15,21 @@ invalid_json_output = '{"name": "Мишка", "email": "erterwtre", "age": 32}'
 def with_defaul(data: str, schema: str) -> str:
     """Функция для тестирования с заданным default_behavior."""
     dict_data = json.loads(data)
-    return dict_data['name']
+    return dict_data['email']
 
 
 @valid_all(input_validation=is_json_valid, output_validation=regex_validation)
 def without_default(data: str, schema: str) -> str:
     """Функция для тестирования с незаданным default_behavior."""
     dict_data = json.loads(data)
-    return dict_data['name']
+    return dict_data['email']
 
 
 @valid_all(input_validation=is_json_valid, output_validation=regex_validation, on_fail_repeat_times=0)
 def zero_repeat_time(data: str, schema: str) -> str:
     """Функция для тестирования с незаданным default_behavior."""
     dict_data = json.loads(data)
-    return dict_data['name']
+    return dict_data['email']
 
 
 class CheckDecoratorTest(unittest.TestCase):
@@ -50,6 +50,9 @@ class CheckDecoratorTest(unittest.TestCase):
     def test_zero_repeat_times(self):
         with self.assertRaises(FailRepeatTimesError):
             zero_repeat_time(data=valid_json_string_to_parse, schema="schema.json")
+    
+    def test_output_with_regex(self):
+        self.assertRegex(with_defaul(data=valid_json_string_to_parse, schema="schema.json"), r"[^@]+@[^@]+\.[^@]+")
 
 
 if __name__ == '__main__':
