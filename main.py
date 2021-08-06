@@ -1,3 +1,5 @@
-from valid_all import valid_all
+"""Основной модуль."""
 
 
+if __name__ == '__main__':
+    pass

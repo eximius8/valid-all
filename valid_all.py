@@ -5,6 +5,7 @@ from cust_exceptions import (
     ResultVerificationError)
 from typing import Callable, Any
 
+
 def valid_all(
     input_validation: Callable,
     output_validation: Callable,
@@ -12,12 +13,11 @@ def valid_all(
     default_behavior: Callable = None,
 ) -> Callable:
     """Основной декоратор."""
-    if on_fail_repeat_times == 0:
-        # Неверно указан параметр
-        raise FailRepeatTimesError
-
     def decorator(func: Callable) -> Callable:
         def wrapper(*args: Any, **kwargs: Any) -> Any:
+            if on_fail_repeat_times == 0:
+                # Неверно указан параметр
+                raise FailRepeatTimesError
             if not input_validation(*args, **kwargs):
                 # Проверка входных парметров
                 raise InputParameterVerificationError
@@ -27,7 +27,7 @@ def valid_all(
                 return func(*args, **kwargs)
             else:
                 # Запомнить ошибку, если функция не прошла проверку
-                error = ResultVerificationError()
+                error = ResultVerificationError
             if on_fail_repeat_times < 0:
                 # Функцию можно повторить бесконечно
                 while not output_validation(result):
