@@ -6,7 +6,7 @@ from valid_all import valid_all
 from auxiliary_funcs import is_json_valid, clear_data, regex_validation
 from cust_exceptions import InputParameterVerificationError, ResultVerificationError, FailRepeatTimesError
 
-valid_json_string_to_parse = '{"name": "Мишка", "email": "dsads@dsfsdf.ru", "age": 32}'
+valid_json_string_to_parse = '{"name": "Мишка", "email": "mikhail@trunov.ru", "age": 32}'
 invalid_json_string_to_parse = '{"name": "Мишка", "email": "fsdafdasfdsa@fdsafsda.ru"}'
 invalid_json_output = '{"name": "Мишка", "email": "erterwtre", "age": 32}'
 
@@ -34,6 +34,9 @@ def zero_repeat_time(data: str, schema: str) -> str:
 
 class CheckDecoratorTest(unittest.TestCase):
     """Тестирование декоратора."""
+
+    def test_output(self):
+        self.assertEqual(with_defaul(data=valid_json_string_to_parse, schema="schema.json"), "mikhail@trunov.ru")
 
     def test_input_error(self):
         with self.assertRaises(InputParameterVerificationError):
